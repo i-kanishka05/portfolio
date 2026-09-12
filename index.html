@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanishka Kaushik — Build Log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+  :root{
+    --paper: #f4f5ef;
+    --paper-line: #dfe0d4;
+    --ink: #1c231f;
+    --ink-soft: #4d564e;
+    --sage: #78806f;
+    --blue: #2c6e8e;
+    --amber: #c8781f;
+    --rule: #cfd2c4;
+    --max: 720px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+    line-height: 1.6;
+    background-image:
+      radial-gradient(var(--paper-line) 1px, transparent 1px);
+    background-size: 26px 26px;
+    background-position: -6px -6px;
+  }
+
+  ::selection{ background: var(--amber); color: var(--paper); }
+
+  a{ color: inherit; }
+
+  .wrap{
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  .mono{
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ---------- nav ---------- */
+  nav{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(244,245,239,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--rule);
+  }
+  nav .wrap{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+  .nav-name{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-soft);
+  }
+  .nav-links{
+    display:flex;
+    gap: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+  }
+  .nav-links a{
+    text-decoration: none;
+    color: var(--ink-soft);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    margin-left: 20px;
+    transition: border-color .15s ease, color .15s ease;
+  }
+  .nav-links a:first-child{ margin-left: 0; }
+  .nav-links a:hover{
+    color: var(--ink);
+    border-color: var(--blue);
+  }
+  .nav-toggle{ display:none; }
+
+  /* ---------- hero ---------- */
+  header.hero{
+    padding: 72px 0 40px;
+  }
+  .entry-date{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.76rem;
+    color: var(--sage);
+    margin: 0 0 10px;
+  }
+  h1.title{
+    font-size: clamp(2.3rem, 5vw, 3.4rem);
+    font-weight: 500;
+    line-height: 1.08;
+    margin: 0 0 20px;
+    max-width: 11ch;
+  }
+  h1.title em{
+    font-style: italic;
+    font-weight: 400;
+    color: var(--blue);
+  }
+  .hero-lede{
+    font-size: 1.14rem;
+    color: var(--ink-soft);
+    max-width: 54ch;
+    margin: 0 0 28px;
+  }
+  .hero-row{
+    display:flex;
+    align-items:center;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+  .diagram{
+    margin-top: 44px;
+    width: 100%;
+    max-width: 560px;
+  }
+
+  .pill-links{ display:flex; gap:14px; flex-wrap:wrap; }
+  .pill{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    padding: 7px 13px;
+    border: 1px solid var(--ink);
+    border-radius: 3px;
+    text-decoration: none;
+    color: var(--ink);
+    background: transparent;
+    transition: background .15s ease, color .15s ease;
+  }
+  .pill:hover{ background: var(--ink); color: var(--paper); }
+  .pill.solid{
+    background: var(--blue);
+    border-color: var(--blue);
+    color: var(--paper);
+  }
+  .pill.solid:hover{ background: var(--ink); border-color: var(--ink); }
+
+  /* ---------- section rules ---------- */
+  section{
+    padding: 46px 0;
+    border-top: 1px solid var(--rule);
+  }
+  h2.section-head{
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0 0 26px;
+  }
+  h2.section-head em{ font-style: italic; color: var(--blue); font-weight: 400; }
+
+  /* ---------- about ---------- */
+  #about p{
+    max-width: 62ch;
+    color: var(--ink-soft);
+    font-size: 1.03rem;
+  }
+  #about p + p{ margin-top: 14px; }
+  #about strong{ color: var(--ink); font-weight: 600; }
+
+  /* ---------- skills ---------- */
+  .skill-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 30px;
+  }
+  .skill-cat h3{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--sage);
+    margin: 0 0 10px;
+  }
+  .chip-row{ display:flex; flex-wrap:wrap; gap: 8px; }
+  .chip{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.76rem;
+    padding: 4px 10px;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    color: var(--ink-soft);
+    background: #fbfbf7;
+  }
+
+  /* ---------- projects / build log ---------- */
+  #projects{ position: relative; }
+  .log{
+    position: relative;
+    margin-left: 8px;
+    padding-left: 26px;
+    border-left: 1.5px dotted var(--rule);
+  }
+  .entry{
+    position: relative;
+    padding-bottom: 44px;
+  }
+  .entry:last-child{ padding-bottom: 4px; }
+  .entry::before{
+    content:"";
+    position:absolute;
+    left: -31px;
+    top: 6px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--blue);
+  }
+  .entry-tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--sage);
+    margin: 0 0 6px;
+  }
+  .entry h3{
+    font-size: 1.28rem;
+    font-weight: 500;
+    margin: 0 0 4px;
+  }
+  .entry .role{
+    font-size: 0.88rem;
+    color: var(--sage);
+    margin: 0 0 14px;
+    font-style: italic;
+  }
+  .entry ul{
+    margin: 0 0 14px;
+    padding-left: 20px;
+    color: var(--ink-soft);
+  }
+  .entry li{ margin-bottom: 6px; max-width: 58ch; }
+  .stack-row{ display:flex; flex-wrap:wrap; gap: 7px; }
+  .stack-row .chip{ font-size: 0.7rem; }
+
+  /* ---------- education ---------- */
+  .edu-item{ margin-bottom: 22px; }
+  .edu-item:last-child{ margin-bottom: 0; }
+  .edu-item .school{ font-weight: 600; font-size: 1.05rem; }
+  .edu-item .deg{ color: var(--ink-soft); }
+  .edu-item .yr{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.76rem;
+    color: var(--sage);
+  }
+
+  /* ---------- certifications ---------- */
+  .cert-list{ list-style:none; margin:0; padding:0; }
+  .cert-list li{
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    display:flex;
+    justify-content: space-between;
+    gap: 16px;
+    color: var(--ink-soft);
+    font-size: 0.96rem;
+  }
+  .cert-list li:last-child{ border-bottom:none; }
+  .cert-list .yr{ font-family:'JetBrains Mono', monospace; font-size:0.76rem; color: var(--sage); white-space:nowrap; }
+
+  /* ---------- contact ---------- */
+  #contact{ padding-bottom: 90px; }
+  .contact-line{ font-size: 1.4rem; max-width: 20ch; margin: 0 0 26px; }
+  .contact-line em{ font-style: italic; color: var(--blue); font-weight: 400; }
+
+  footer{
+    border-top: 1px solid var(--rule);
+    padding: 22px 0 40px;
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.74rem;
+    color: var(--sage);
+  }
+
+  @media (max-width: 620px){
+    .skill-grid{ grid-template-columns: 1fr; }
+    .nav-links{ gap: 14px; }
+    h1.title{ max-width: none; }
+  }
+
+  @media (max-width: 480px){
+    nav .wrap{ flex-direction: column; align-items: flex-start; gap: 8px; padding-top: 10px; padding-bottom: 10px; }
+    .nav-links{ font-size: 0.72rem; }
+    .nav-links a{ margin-left: 14px; }
+    .wrap{ padding: 0 20px; }
+    .badge{ font-size: 0.68rem; padding: 5px 10px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    .reveal, .blob, .badge, .node-dot{ animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
+  }
+
+  /* ---------- role badges ---------- */
+  .role-badges{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+    margin: 0 0 26px;
+  }
+  .badge{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 0.74rem;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid var(--rule);
+    color: var(--ink-soft);
+    box-shadow: 0 6px 14px -8px rgba(28,35,31,0.25);
+    animation: bob 5.5s ease-in-out infinite;
+  }
+  .badge:nth-child(1){ animation-delay: 0s; }
+  .badge:nth-child(2){ animation-delay: .6s; border-color: var(--blue); color: var(--blue); }
+  .badge:nth-child(3){ animation-delay: 1.2s; }
+  .badge:nth-child(4){ animation-delay: 1.8s; border-color: var(--amber); color: var(--amber); }
+
+  @keyframes heroIn{
+    from{ opacity: 0; transform: translateY(16px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+  .role-badges, h1.title, .hero-lede, .hero-row, .diagram{
+    animation: heroIn .7s ease both;
+  }
+  .role-badges{ animation-delay: .05s; }
+  h1.title{ animation-delay: .15s; }
+  .hero-lede{ animation-delay: .28s; }
+  .hero-row{ animation-delay: .4s; }
+  .diagram{ animation-delay: .52s; }
+
+  @keyframes bob{
+    0%, 100%{ transform: translateY(0); }
+    50%{ transform: translateY(-6px); }
+  }
+
+  /* ---------- floating background blobs ---------- */
+  body{ overflow-x: hidden; }
+  header.hero{ position: relative; z-index: 1; }
+  .blob{
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(38px);
+    z-index: -1;
+    pointer-events: none;
+  }
+  .blob-1{
+    width: 260px; height: 260px;
+    background: radial-gradient(circle, rgba(44,110,142,0.28), transparent 70%);
+    top: -60px; right: -40px;
+    animation: drift1 16s ease-in-out infinite;
+  }
+  .blob-2{
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(200,120,31,0.22), transparent 70%);
+    bottom: -30px; left: -30px;
+    animation: drift2 19s ease-in-out infinite;
+  }
+  @keyframes drift1{
+    0%, 100%{ transform: translate(0,0); }
+    50%{ transform: translate(-24px, 30px); }
+  }
+  @keyframes drift2{
+    0%, 100%{ transform: translate(0,0); }
+    50%{ transform: translate(20px, -22px); }
+  }
+
+  .node-dot{ animation: pulse 3.2s ease-in-out infinite; transform-origin: center; }
+  .node-dot:nth-of-type(2){ animation-delay: .5s; }
+  .node-dot:nth-of-type(3){ animation-delay: 1s; }
+  .node-dot:nth-of-type(4){ animation-delay: 1.5s; }
+  @keyframes pulse{
+    0%, 100%{ transform: scale(1); }
+    50%{ transform: scale(1.28); }
+  }
+
+  /* ---------- scroll reveal (progressive enhancement: only hidden once JS confirms it can reveal it) ---------- */
+  .js .reveal{
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .js .reveal.reveal-left{ transform: translateX(-22px); }
+  .reveal.is-visible{
+    opacity: 1;
+    transform: translate(0,0);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <span class="nav-name">kanishka kaushik</span>
+    <div class="nav-links">
+      <a href="#projects">projects</a>
+      <a href="#skills">skills</a>
+      <a href="#education">education</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="blob blob-1" aria-hidden="true"></div>
+  <div class="blob blob-2" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="entry-date mono">GHAZIABAD, INDIA — B.TECH CS, 2024–2028</p>
+    <div class="role-badges">
+      <span class="badge">Software Engineering</span>
+      <span class="badge">AI / ML</span>
+      <span class="badge">Full-Stack</span>
+      <span class="badge">Blockchain</span>
+    </div>
+    <h1 class="title">I build the <em>parts underneath</em> the interesting parts.</h1>
+    <p class="hero-lede">Third-year CS undergrad who's worked across computer vision, full-stack web apps, and blockchain — a detection pipeline reading a webcam feed, an escrow flow running on a smart contract, the cart logic behind a product page. Java and Python by training, whatever the project needs by habit.</p>
+    <div class="hero-row">
+      <div class="pill-links">
+        <a class="pill solid" href="#projects">See the projects</a>
+        <a class="pill" href="mailto:kaushikkanishkaa@gmail.com">Email me</a>
+      </div>
+    </div>
+
+    <svg class="diagram" viewBox="0 0 560 190" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram connecting Kanishka's four working areas: vision, contracts, web, and models">
+      <line x1="90" y1="95" x2="270" y2="40" stroke="#cfd2c4" stroke-width="1.5"/>
+      <line x1="90" y1="95" x2="270" y2="150" stroke="#cfd2c4" stroke-width="1.5"/>
+      <line x1="270" y1="40" x2="470" y2="95" stroke="#cfd2c4" stroke-width="1.5"/>
+      <line x1="270" y1="150" x2="470" y2="95" stroke="#cfd2c4" stroke-width="1.5"/>
+      <line x1="270" y1="40" x2="270" y2="150" stroke="#cfd2c4" stroke-width="1.5" stroke-dasharray="2 4"/>
+
+      <circle class="node-dot" cx="90" cy="95" r="5" fill="#2c6e8e"/>
+      <circle class="node-dot" cx="270" cy="40" r="5" fill="#c8781f"/>
+      <circle class="node-dot" cx="270" cy="150" r="5" fill="#78806f"/>
+      <circle class="node-dot" cx="470" cy="95" r="5" fill="#2c6e8e"/>
+
+      <text x="60" y="122" font-family="JetBrains Mono, monospace" font-size="11" fill="#4d564e">vision</text>
+      <text x="240" y="24" font-family="JetBrains Mono, monospace" font-size="11" fill="#4d564e">contracts</text>
+      <text x="248" y="178" font-family="JetBrains Mono, monospace" font-size="11" fill="#4d564e">interfaces</text>
+      <text x="442" y="122" font-family="JetBrains Mono, monospace" font-size="11" fill="#4d564e">models</text>
+    </svg>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <h2 class="section-head reveal">About</h2>
+    <p class="reveal">I'm currently in my third year of a <strong>B.Tech in Computer Science at AKGEC, Ghaziabad</strong>, working through data structures, DBMS, and operating systems alongside a growing pile of side projects. Before this I completed the foundation level of IIT Madras's <strong>B.S. in Data Science and Applications</strong>, then chose to put my focus fully into AKGEC.</p>
+    <p class="reveal">Most of what's below started as "can I actually build this" rather than a class assignment — a webcam that reads moods, an escrow contract built in 24 hours at a hackathon, a surveillance pipeline that logs its own evidence. I'm a member of the ISTE student chapter at AKGEC, and I round things out with job simulations from JPMorgan Chase and Deloitte on Forage.</p>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <h2 class="section-head reveal">What I work <em>with</em></h2>
+    <div class="skill-grid">
+      <div class="skill-cat reveal">
+        <h3>languages</h3>
+        <div class="chip-row">
+          <span class="chip">Java</span><span class="chip">Python</span><span class="chip">C</span>
+        </div>
+      </div>
+      <div class="skill-cat reveal">
+        <h3>core cs</h3>
+        <div class="chip-row">
+          <span class="chip">DSA</span><span class="chip">OOP</span><span class="chip">DBMS</span><span class="chip">Operating Systems</span><span class="chip">Computer Networks</span>
+        </div>
+      </div>
+      <div class="skill-cat reveal">
+        <h3>web</h3>
+        <div class="chip-row">
+          <span class="chip">HTML/CSS/JS</span><span class="chip">MongoDB</span><span class="chip">Express.js</span><span class="chip">React</span><span class="chip">Node.js</span>
+        </div>
+      </div>
+      <div class="skill-cat reveal">
+        <h3>ai / ml</h3>
+        <div class="chip-row">
+          <span class="chip">ML Fundamentals</span><span class="chip">Computer Vision</span><span class="chip">Data Analytics</span><span class="chip">NLP Fundamentals</span>
+        </div>
+      </div>
+      <div class="skill-cat reveal">
+        <h3>blockchain</h3>
+        <div class="chip-row">
+          <span class="chip">Solidity</span><span class="chip">Smart Contracts</span><span class="chip">Web3</span>
+        </div>
+      </div>
+      <div class="skill-cat reveal">
+        <h3>databases &amp; tools</h3>
+        <div class="chip-row">
+          <span class="chip">MySQL</span><span class="chip">MongoDB</span><span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">VS Code</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <h2 class="section-head reveal">Build <em>log</em></h2>
+    <div class="log">
+
+      <div class="entry reveal reveal-left">
+        <p class="entry-tag mono">TEAM OF 3 · AKGEC 24-HOUR HACKATHON</p>
+        <h3>TrustLance</h3>
+        <p class="role">A decentralized escrow protocol for freelance work</p>
+        <ul>
+          <li>Built a decentralized escrow platform to remove middleman trust between clients and freelancers, using Trae AI as the AI development partner throughout the 24-hour build.</li>
+          <li>Designed Smart Escrow Vaults that release milestone-based payments only on verified delivery, via Solidity contracts deployed to the Ethereum Sepolia testnet.</li>
+          <li>Integrated an AI oracle (Groq Llama-3) to autonomously validate proof-of-work submissions, backed by a DAO-based dispute resolution system with staked jurors.</li>
+        </ul>
+        <div class="stack-row">
+          <span class="chip">Solidity</span><span class="chip">Wagmi</span><span class="chip">Viem</span><span class="chip">Next.js 14</span><span class="chip">Tailwind</span><span class="chip">Groq Llama-3</span><span class="chip">IPFS</span>
+        </div>
+      </div>
+
+      <div class="entry reveal reveal-left">
+        <p class="entry-tag mono">SOLO PROJECT</p>
+        <h3>ASTRA-SHIELD</h3>
+        <p class="role">An AI-assisted surveillance system</p>
+        <ul>
+          <li>Built a live detection pipeline with YOLO11n and OpenCV to track people and vehicles and flag intrusions into a restricted zone.</li>
+          <li>Set up auto-generated, timestamped incident logs so every flagged event has a record for later review.</li>
+          <li>Designed a Flask-based session system with three role tiers — Admin, Operator, Viewer — to scope dashboard and evidence access by role.</li>
+        </ul>
+        <div class="stack-row">
+          <span class="chip">Python</span><span class="chip">Flask</span><span class="chip">OpenCV</span><span class="chip">YOLO11n</span>
+        </div>
+      </div>
+
+      <div class="entry reveal reveal-left">
+        <p class="entry-tag mono">SOLO PROJECT</p>
+        <h3>Mood Detector</h3>
+        <p class="role">A webcam that picks the next song</p>
+        <ul>
+          <li>Built a webcam-based mood detector using OpenCV facial-expression analysis running on a live video feed.</li>
+          <li>Mapped detected expressions to mood categories and matched each one to a corresponding song, playing it automatically in real time.</li>
+          <li>Tuned the capture-and-inference loop to stay responsive enough for the detection to feel immediate rather than laggy.</li>
+        </ul>
+        <div class="stack-row">
+          <span class="chip">Python</span><span class="chip">OpenCV</span>
+        </div>
+      </div>
+
+      <div class="entry reveal reveal-left">
+        <p class="entry-tag mono">SOLO PROJECT</p>
+        <h3>Makeup E-Commerce Website</h3>
+        <p class="role">A front-end storefront with a working cart</p>
+        <ul>
+          <li>Built product listing and detail pages pulling live data from the DummyJSON API.</li>
+          <li>Implemented add-to-cart and remove-from-cart logic with dynamic bill calculation as items changed.</li>
+          <li>Laid out a browsing experience in plain HTML, CSS, and JavaScript, with no framework overhead.</li>
+        </ul>
+        <div class="stack-row">
+          <span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span>
+        </div>
+      </div>
+
+      <div class="entry reveal reveal-left">
+        <p class="entry-tag mono">SOLO PROJECT</p>
+        <h3>Hotel Booking</h3>
+        <p class="role">Browse rooms, request a booking, get confirmed</p>
+        <ul>
+          <li>Built a front-end flow for browsing available rooms with their details.</li>
+          <li>Implemented a booking request form that walks through to a confirmation step.</li>
+          <li>Kept the interface simple and responsive so the booking flow holds up on smaller screens too.</li>
+        </ul>
+        <div class="stack-row">
+          <span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <h2 class="section-head reveal">Education</h2>
+
+    <div class="edu-item reveal">
+      <div class="school">Ajay Kumar Garg Engineering College (AKGEC), Ghaziabad</div>
+      <div class="deg">B.Tech, Computer Science — CGPA 8.00/10 (up to 4th semester)</div>
+      <div class="yr">2024 – 2028</div>
+    </div>
+
+    <div class="edu-item reveal">
+      <div class="school">Indian Institute of Technology, Madras</div>
+      <div class="deg">B.S. in Data Science and Applications — Foundation Level completed, program discontinued</div>
+      <div class="yr">2024 – 2025</div>
+    </div>
+
+    <div class="edu-item reveal">
+      <div class="school">Schooling</div>
+      <div class="deg">Class XII — 91% &nbsp;·&nbsp; Class X — 95.6%</div>
+    </div>
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="wrap">
+    <h2 class="section-head reveal">Certifications &amp; simulations</h2>
+    <ul class="cert-list">
+      <li><span>JPMorgan Chase &amp; Co. — Software Engineering Job Simulation, Forage</span><span class="yr">2025</span></li>
+      <li><span>Deloitte — Technology, Data Analytics &amp; Cyber Job Simulations, Forage</span><span class="yr">2025</span></li>
+      <li><span>Infosys Springboard — Data Structures &amp; Algorithms; Python Programming</span><span class="yr">2026</span></li>
+      <li><span>Tutedude — Data Structures and Algorithms with Java</span><span class="yr">2026</span></li>
+      <li><span>ISTE — Student Member, AKGEC Chapter</span><span class="yr">2025 – 2028</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <h2 class="section-head reveal">Get in <em>touch</em></h2>
+    <p class="contact-line">Open to Software Engineering and AI/ML internships.</p>
+    <div class="pill-links">
+      <a class="pill solid" href="mailto:kaushikkanishkaa@gmail.com">kaushikkanishkaa@gmail.com</a>
+      <a class="pill" href="tel:+919355606533">+91 93556 06533</a>
+      <a class="pill" href="https://www.linkedin.com/in/kanishka-kaushik-4b239932b" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="pill" href="https://github.com/i-kanishka05" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    kanishka kaushik — ghaziabad, uttar pradesh — last updated 2026
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var items = document.querySelectorAll('.reveal');
+
+    // Safety net first, independent of everything below: whatever happens,
+    // this browser will see the content within 2.5s no matter what.
+    var revealAll = function(){ items.forEach(function(el){ el.classList.add('is-visible'); }); };
+    var safety = setTimeout(revealAll, 2500);
+
+    try {
+      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(prefersReduced || !('IntersectionObserver' in window)){
+        clearTimeout(safety);
+        revealAll();
+        return;
+      }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry, i){
+          if(entry.isIntersecting){
+            var el = entry.target;
+            setTimeout(function(){ el.classList.add('is-visible'); }, i * 60);
+            io.unobserve(el);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      items.forEach(function(el){ io.observe(el); });
+    } catch(e){
+      revealAll();
+    }
+  })();
+</script>
+</body>
+</html>
